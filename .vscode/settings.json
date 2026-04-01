@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Sourdough Starter.sln"
+    "dotnet.defaultSolution": "The Hero Is On The Way.sln"
 }

@@ -1,67 +1,84 @@
-using System;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
     private Rigidbody2D rb;
-    private PlayerEnergy playerEnergy;
+    private Animator _animator;
 
-    // ==================== MOVEMENT ====================
-    private Vector2 moveInput;
-    private bool isSprinting;
-    private float currentMoveSpeed;
+    private float horizontalInput;
+    private bool jumpRequest;
 
-    [SerializeField] private float normalSpeed = 10f;
-    [SerializeField] private float sprintSpeed = 25f;
-    [SerializeField] private float sprintEnergyPerSecond = 8f;
+    [Header("Movement Settings")]
+    [SerializeField] private float moveSpeed = 18f;
+    [SerializeField] private float jumpForce = 12f;
+
+    [Header("Ground Check")]
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private float checkRadius = 0.2f;
+    [SerializeField] private LayerMask groundLayer;
+    private bool isGrounded;
 
     void Awake()
     {
-        rb = GetComponentInParent<Rigidbody2D>();
-        playerEnergy = GetComponentInParent<PlayerEnergy>();
+        _animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
-        // Baca input di Update, bukan FixedUpdate
-        moveInput = new Vector2(
-            Input.GetAxisRaw("Horizontal"),
-            Input.GetAxisRaw("Vertical")
-        ).normalized;
+        horizontalInput = Input.GetAxisRaw("Horizontal");
 
-        isSprinting = Input.GetKey(KeyCode.LeftShift);
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
+            jumpRequest = true;
+        }
+
+        bool moving = Mathf.Abs(horizontalInput) > 0.01f;
+        _animator.SetBool("isRunning", moving);
+        _animator.SetBool("isJumping", !isGrounded);
+
+        FlipSprite();
     }
 
     void FixedUpdate()
     {
-        HandleSprintEnergy();
+        CheckGround();
         Move();
+
+        if (jumpRequest)
+        {
+            Jump();
+        }
     }
 
-    private void HandleSprintEnergy()
+    private void CheckGround()
     {
-        if (!isSprinting || moveInput == Vector2.zero) return;
-
-        float energyCost = sprintEnergyPerSecond * Time.fixedDeltaTime;
-        bool success = playerEnergy.UseEnergy(Mathf.CeilToInt(energyCost));
-
-        if (!success)
-        {
-            Debug.Log("[PlayerMove] Energy depleted, sprint stopped");
-            isSprinting = false;
-        }
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
     }
 
     private void Move()
     {
-        if (moveInput == Vector2.zero) return;
-
-        currentMoveSpeed = isSprinting ? sprintSpeed : normalSpeed;
-        rb.MovePosition(rb.position + moveInput * currentMoveSpeed * Time.fixedDeltaTime);
-
-        float angle = Mathf.Atan2(moveInput.y, moveInput.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, angle);
+        rb.velocity = new Vector2(horizontalInput * moveSpeed, rb.velocity.y);
     }
 
-    public float GetCurrentSpeed() => currentMoveSpeed;
+    private void Jump()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        jumpRequest = false;
+    }
+
+    private void FlipSprite()
+    {
+        if (horizontalInput > 0) transform.localScale = new Vector3(1, 1, 1);
+        else if (horizontalInput < 0) transform.localScale = new Vector3(-1, 1, 1);
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        if (groundCheck != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(groundCheck.position, checkRadius);
+        }
+    }
 }
