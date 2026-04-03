@@ -6,14 +6,14 @@ using UnityEngine;
 public class DemonSoldier : Enemy
 {
     [Header("Stats")]
-    public float moveSpeed   = 3f;
+    public float moveSpeed = 3f;
     public float attackRange = 1.5f;
-    public float chaseRange  = 6f;
-    public int   maxHp       = 3;
+    public float chaseRange = 6f;
+    public int maxHp = 3;
 
-    [HideInInspector] public int       hp;
+    [HideInInspector] public int hp;
     [HideInInspector] public Transform target;
-    [HideInInspector] public bool      isDead;
+    [HideInInspector] public bool isDead;
 
     protected override void Awake()
     {
@@ -43,8 +43,8 @@ public class EnemyIdleState : EnemyState
     private DemonSoldier _d;
     public EnemyIdleState(DemonSoldier e) : base(e) { _d = e; }
 
-    public override void Enter()  => Play("Idle");
-    public override void Exit()   { }
+    public override void Enter() => Play("Idle");
+    public override void Exit() { }
 
     public override void Update()
     {
@@ -64,7 +64,7 @@ public class EnemyRunState : EnemyState
     public EnemyRunState(DemonSoldier e) : base(e) { _d = e; }
 
     public override void Enter() => Play("Run");
-    public override void Exit()  { }
+    public override void Exit() { }
 
     public override void Update()
     {
@@ -72,7 +72,7 @@ public class EnemyRunState : EnemyState
         float dist = Vector2.Distance(_d.transform.position, _d.target.position);
 
         if (dist <= _d.attackRange) { _d.ChangeState(new EnemyAttackState(_d)); return; }
-        if (dist > _d.chaseRange)   { _d.ChangeState(new EnemyIdleState(_d));   return; }
+        if (dist > _d.chaseRange) { _d.ChangeState(new EnemyIdleState(_d)); return; }
     }
 
     public override void FixedUpdate()
@@ -89,7 +89,7 @@ public class EnemyRunState : EnemyState
 public class EnemyAttackState : EnemyState
 {
     private DemonSoldier _d;
-    private bool         _attacked;
+    private bool _attacked;
 
     public EnemyAttackState(DemonSoldier e) : base(e) { _d = e; }
 
@@ -129,7 +129,7 @@ public class EnemyHitState : EnemyState
     public EnemyHitState(DemonSoldier e) : base(e) { _d = e; }
 
     public override void Enter() => Play("Hit");
-    public override void Exit()  { }
+    public override void Exit() { }
 
     public override void Update()
     {

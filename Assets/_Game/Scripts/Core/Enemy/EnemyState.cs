@@ -2,18 +2,18 @@ using UnityEngine;
 
 public abstract class EnemyState
 {
-    protected Enemy    enemy;
+    protected Enemy enemy;
     protected Animator animator;
 
     public EnemyState(Enemy enemy)
     {
-        this.enemy    = enemy;
+        this.enemy = enemy;
         this.animator = enemy.Animator;
     }
 
     public abstract void Enter();
     public abstract void Update();
-    public virtual  void FixedUpdate() { }
+    public virtual void FixedUpdate() { }
     public abstract void Exit();
 
     // Langsung play clip — tidak butuh panah di Animator
