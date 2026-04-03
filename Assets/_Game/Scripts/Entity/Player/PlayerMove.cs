@@ -48,6 +48,7 @@ public class PlayerMove : MonoBehaviour
         if (jumpRequest)
         {
             Jump();
+            SceneChanger.Instance.ChangeScene("GameOver", "You Jumped! Game Over!", fadeIn: true, fadeOut: true);
         }
     }
 
