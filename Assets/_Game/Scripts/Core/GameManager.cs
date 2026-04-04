@@ -28,21 +28,21 @@ public class GameManager : MonoBehaviour
 
     public void OnPlayerDeath()
     {
-        SceneChanger.Instance.ChangeScene("GameOver", "You Jumped! Game Over!", fadeIn: true, fadeOut: false);
+        SceneChanger.Instance.ChangeScene("GameOver", "No one came.", fadeIn: true, fadeOut: false);
     }
     public void OnGateDestroyed()
     {
-
+        SceneChanger.Instance.ChangeScene("GameOver", new string[] { "The gate was destroyed!", "No one survived." }, fadeIn: true, fadeOut: false);
     }
 
     public void OnHeroArrived()
     {
-
+        SceneChanger.Instance.ChangeScene("MainMenu", "Thank you, we’ll take it from here.", fadeIn: true, fadeOut: false);
     }
 
     public void OnDemonPressureFull()
     {
-
+        
     }
 
     // ================== DEFAULT SETTER ===============
