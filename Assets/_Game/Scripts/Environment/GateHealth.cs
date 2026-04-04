@@ -1,21 +1,21 @@
 using UnityEngine;
 
-public class PlayerHealth : Health
+public class GateHealth : Health
 {
     protected override void Start()
     {
         base.Start();
-        OnDeath += HandlePlayerDeath;
+        OnDeath += HandleGateDestroyed;
         OnHealthChanged += HandleHealthChanged;
     }
 
-    private void HandlePlayerDeath()
+    private void HandleGateDestroyed()
     {
-        GameManager.Instance.OnPlayerDeath();
+        GameManager.Instance.OnGateDestroyed();
     }
 
     private void HandleHealthChanged(int current, int max)
     {
-        HUD.Instance.SetPlayerHpBar(current, max);
+        HUD.Instance.SetGateHpBar(current, max);
     }
 }
