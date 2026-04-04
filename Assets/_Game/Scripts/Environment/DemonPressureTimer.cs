@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class DemonPressureTimer : MonoBehaviour
 {
+    [Header("Timer Settings (Minute)")]
     public float arrivalTime = 10f;
     private float timer;
 
