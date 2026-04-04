@@ -6541,6 +6541,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: InjuredKnight
       objectReference: {fileID: 0}
+    - target: {fileID: 8881355068824389969, guid: 7232bb31e82e0a96ab85e3760da9c5e3,
+        type: 3}
+      propertyPath: attack
+      value: 
+      objectReference: {fileID: 6460878068767317670}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6568,6 +6573,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87a1b26665844788294e39e6ad657e45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6460878068767317670 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3870072969199964083, guid: 7232bb31e82e0a96ab85e3760da9c5e3,
+    type: 3}
+  m_PrefabInstance: {fileID: 4614286090098080002}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b97355787cc450f9bd47f611c000882, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &7108566058895027289

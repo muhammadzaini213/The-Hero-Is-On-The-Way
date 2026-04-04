@@ -21,11 +21,12 @@ public class InjuredKnightMove : MonoBehaviour
 
     void Update()
     {
+        bool moving = Mathf.Abs(horizontalInput) > 0.01f;
+        
         if (attack.isAttacking || health.isHitAnimation || health.isDeath) return;
 
         horizontalInput = Input.GetAxisRaw("Horizontal");
 
-        bool moving = Mathf.Abs(horizontalInput) > 0.01f;
         _animator.SetBool("isRunning", moving);
 
         FlipSprite();
