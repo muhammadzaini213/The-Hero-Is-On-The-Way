@@ -1,6 +1,4 @@
-using UnityEditor.SearchService;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering.RenderGraphModule;
 
 public class GameManager : MonoBehaviour
 {
@@ -28,7 +26,7 @@ public class GameManager : MonoBehaviour
 
     public void OnPlayerDeath()
     {
-        SceneChanger.Instance.ChangeScene("GameOver", "No one came.", fadeIn: true, fadeOut: false);
+        SceneChanger.Instance.ChangeScene("GameOver", new string[] { "You have been falled.", "The demons killed everyone before they could help." }, fadeIn: true, fadeOut: false);
     }
     public void OnGateDestroyed()
     {
