@@ -28,6 +28,18 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B)){
             playerHealth.TakeDamage(10);
         }
+
+        if (Input.GetKeyDown(KeyCode.N)){
+            gateHealth.TakeDamage(10);
+        }
+
+        if (Input.GetKeyDown(KeyCode.M)){
+            TutorialText.Instance.ShowTutorial("This is a tutorial text. It will fade in and out smoothly.");
+        }
+
+        if (Input.GetKeyDown(KeyCode.K)){
+            TutorialText.Instance.HideTutorial();
+        }
     }
 
     // ================== PUBLIC LISTENER =================
