@@ -1,9 +1,11 @@
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.RenderGraphModule;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    
+
     [SerializeField] private PlayerHealth playerHealth;
     [SerializeField] private GateHealth gateHealth;
     [SerializeField] private HeroArrivalTimer heroArrivalTimer;
@@ -19,27 +21,28 @@ public class GameManager : MonoBehaviour
         SetHealth();
         SetGateHealth();
         SetHeroArrival();
+        SetDemonPressure();
     }
 
     // ================== PUBLIC LISTENER =================
 
     public void OnPlayerDeath()
     {
-        
+        SceneChanger.Instance.ChangeScene("GameOver", "You Jumped! Game Over!", fadeIn: true, fadeOut: false);
     }
     public void OnGateDestroyed()
     {
-        
+
     }
 
     public void OnHeroArrived()
     {
-        
+
     }
 
     public void OnDemonPressureFull()
     {
-        
+
     }
 
     // ================== DEFAULT SETTER ===============
@@ -47,7 +50,7 @@ public class GameManager : MonoBehaviour
     {
         int health = playerHealth.CurrentHealth;
         int maxHealth = playerHealth.MaxHealth;
-    
+
         HUD.Instance.SetPlayerHpBar(health, maxHealth);
     }
 
