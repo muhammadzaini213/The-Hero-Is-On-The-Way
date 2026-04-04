@@ -4,7 +4,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    [SerializeField] private PlayerHealth playerHealth;
+    [SerializeField] private Health playerHealth;
     [SerializeField] private GateHealth gateHealth;
     [SerializeField] private HeroArrivalTimer heroArrivalTimer;
     [SerializeField] private DemonPressureTimer demonPressureTimer;
@@ -20,6 +20,14 @@ public class GameManager : MonoBehaviour
         SetGateHealth();
         SetHeroArrival();
         SetDemonPressure();
+    }
+
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.B)){
+            playerHealth.TakeDamage(10);
+        }
     }
 
     // ================== PUBLIC LISTENER =================
@@ -40,7 +48,7 @@ public class GameManager : MonoBehaviour
 
     public void OnDemonPressureFull()
     {
-        
+
     }
 
     // ================== DEFAULT SETTER ===============
