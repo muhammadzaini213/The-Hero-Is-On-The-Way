@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PlayerHealth playerHealth;
     [SerializeField] private GateHealth gateHealth;
     [SerializeField] private HeroArrivalTimer heroArrivalTimer;
+    [SerializeField] private DemonPressureTimer demonPressureTimer;
 
     void Awake()
     {
@@ -36,6 +37,11 @@ public class GameManager : MonoBehaviour
         
     }
 
+    public void OnDemonPressureFull()
+    {
+        
+    }
+
     // ================== DEFAULT SETTER ===============
     private void SetHealth()
     {
@@ -57,5 +63,11 @@ public class GameManager : MonoBehaviour
     {
         float arrivalTime = heroArrivalTimer.arrivalTime;
         HUD.Instance.SetHeroArrivalBar(arrivalTime, arrivalTime);
+    }
+
+    private void SetDemonPressure()
+    {
+        float arrivalTime = demonPressureTimer.arrivalTime;
+        HUD.Instance.SetDemonPressureBar(arrivalTime, arrivalTime);
     }
 }

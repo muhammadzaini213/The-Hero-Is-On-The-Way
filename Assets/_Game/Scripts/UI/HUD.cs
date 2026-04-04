@@ -6,9 +6,11 @@ public class HUD : MonoBehaviour
     public static HUD Instance { get; private set; }
 
     [Header("Bar")]
-    private Slider playerHpBar;
-    private Slider gateHpBar;
-    private Slider heroArrivalBar;
+
+    [SerializeField] private Slider playerHpBar;
+    [SerializeField] private Slider gateHpBar;
+    [SerializeField] private Slider heroArrivalBar;
+    [SerializeField] private Slider demonPressureBar;
 
     void Awake()
     {
@@ -50,6 +52,18 @@ public class HUD : MonoBehaviour
 
         heroArrivalBar.maxValue = max;
         heroArrivalBar.value = current;
+    }
+
+    public void SetDemonPressureBar(float current, float max)
+    {
+        if (demonPressureBar == null)
+        {
+            Debug.LogError("Demon Pressure Bar not assigned in HUD.");
+            return;
+        }
+
+        demonPressureBar.maxValue = max;
+        demonPressureBar.value = current;
     }
 
     // ======================== SUPPORT FUNCTIONS ========================
