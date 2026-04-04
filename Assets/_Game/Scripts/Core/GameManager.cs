@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+
+        // Debug input untuk testing
         if (Input.GetKeyDown(KeyCode.B)){
             playerHealth.TakeDamage(10);
         }
