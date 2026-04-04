@@ -4,20 +4,25 @@ public class InjuredKnightMove : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Animator _animator;
-
     private float horizontalInput;
+    private InjuredKnightAttack attack;
+    private InjuredKnightHealth health;
 
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 18f;
 
     void Awake()
     {
+        attack = GetComponent<InjuredKnightAttack>();
+        health = GetComponent<InjuredKnightHealth>();
         _animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
+        if (attack.isAttacking || health.isHitAnimation || health.isDeath) return;
+
         horizontalInput = Input.GetAxisRaw("Horizontal");
 
         bool moving = Mathf.Abs(horizontalInput) > 0.01f;
@@ -28,6 +33,12 @@ public class InjuredKnightMove : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (attack.isAttacking || health.isHitAnimation || health.isDeath)
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
+            return;
+        }
+
         Move();
     }
 
