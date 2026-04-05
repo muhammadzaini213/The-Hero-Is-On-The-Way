@@ -51,6 +51,12 @@ MonoBehaviour:
   gateHealth: {fileID: 0}
   heroArrivalTimer: {fileID: 4929277878851322730}
   demonPressureTimer: {fileID: 1000291903474839317}
+  healAmount: 20
+  heroArrivalCost: 5
+  healEffectPrefab: {fileID: 7993083152386823529, guid: 8bf4b7a97404e0a92b158cd80c42372f,
+    type: 3}
+  healEffectSpawn: {fileID: 0}
+  healSfx: {fileID: 8300000, guid: f81cd99d240ef32edb8bf7adf5baf834, type: 3}
 --- !u!1 &5172731530395375073
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,10 +9,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private HeroArrivalTimer heroArrivalTimer;
     [SerializeField] private DemonPressureTimer demonPressureTimer;
 
-    void Awake()
-    {
-        Instance = this;
-    }
+    [Header("Heal Support")]
+    [SerializeField] private int healAmount = 20;
+    [SerializeField] private float heroArrivalCost = 5f;
+    [SerializeField] private GameObject healEffectPrefab;
+    [SerializeField] private Transform healEffectSpawn;  // drag child object player ke sini
+    [SerializeField] private AudioClip healSfx;
+    [SerializeField] private AudioClip heroArrivalSfx;
+    [SerializeField] private GameObject heroArrivalVFX;
+    void Awake() => Instance = this;
 
     void Start()
     {
@@ -22,75 +27,83 @@ public class GameManager : MonoBehaviour
         SetDemonPressure();
     }
 
-
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.F)) UseHealSupport();
 
-        // Debug input untuk testing
-        if (Input.GetKeyDown(KeyCode.B)){
-            playerHealth.TakeDamage(10);
-        }
-
-        if (Input.GetKeyDown(KeyCode.N)){
-            gateHealth.TakeDamage(10);
-        }
-
-        if (Input.GetKeyDown(KeyCode.M)){
-            TutorialText.Instance.ShowTutorial("This is a tutorial text. It will fade in and out smoothly.");
-        }
-
-        if (Input.GetKeyDown(KeyCode.K)){
-            TutorialText.Instance.HideTutorial();
-        }
+        if (Input.GetKeyDown(KeyCode.B)) playerHealth.TakeDamage(10);
+        if (Input.GetKeyDown(KeyCode.N)) gateHealth.TakeDamage(10);
+        if (Input.GetKeyDown(KeyCode.M)) TutorialText.Instance.ShowTutorial("This is a tutorial text. It will fade in and out smoothly.");
+        if (Input.GetKeyDown(KeyCode.K)) TutorialText.Instance.HideTutorial();
     }
 
-    // ================== PUBLIC LISTENER =================
+    // ================== HEAL SUPPORT ==================
+
+    private void UseHealSupport()
+    {
+        if (healEffectPrefab != null)
+        {
+            // Pakai healEffectSpawn kalau ada, fallback ke posisi player
+            Vector3 spawnPos = healEffectSpawn != null
+                ? healEffectSpawn.position
+                : playerHealth.transform.position;
+
+            Instantiate(healEffectPrefab, spawnPos, Quaternion.identity);
+        }
+
+        if (healSfx != null)
+            SfxPlayer.Instance.PlayPlayerSfx(healSfx);
+
+        playerHealth.Heal(healAmount);
+        heroArrivalTimer.DelayArrival(heroArrivalCost);
+    }
+
+    // ================== PUBLIC LISTENER ==================
 
     public void OnPlayerDeath()
     {
-        SceneChanger.Instance.ChangeScene("GameOver", new string[] { "You have been falled.", "The demons killed everyone before they could help." }, fadeIn: true, fadeOut: false);
+        SceneChanger.Instance.ChangeScene("GameOver",
+            new string[] { "You have been falled.", "The demons killed everyone before they could help." },
+            fadeIn: true, fadeOut: false);
     }
+
     public void OnGateDestroyed()
     {
-        SceneChanger.Instance.ChangeScene("GameOver", new string[] { "The gate was destroyed!", "No one survived." }, fadeIn: true, fadeOut: false);
+        SceneChanger.Instance.ChangeScene("GameOver",
+            new string[] { "The gate was destroyed!", "No one survived." },
+            fadeIn: true, fadeOut: false);
     }
 
     public void OnHeroArrived()
     {
-        SceneChanger.Instance.ChangeScene("MainMenu", "Thank you, we’ll take it from here.", fadeIn: true, fadeOut: false);
+        heroArrivalVFX.SetActive(true);
+        SfxPlayer.Instance.PlayEnvironmentSfx(heroArrivalSfx);
+        SceneChanger.Instance.ChangeScene("MainMenu",
+            "Thank you, we'll take it from here.",
+            fadeIn: true, fadeOut: false);
     }
 
-    public void OnDemonPressureFull()
-    {
+    public void OnDemonPressureFull() { }
 
-    }
+    // ================== DEFAULT SETTER ==================
 
-    // ================== DEFAULT SETTER ===============
     private void SetHealth()
     {
-        int health = playerHealth.CurrentHealth;
-        int maxHealth = playerHealth.MaxHealth;
-
-        HUD.Instance.SetPlayerHpBar(health, maxHealth);
+        HUD.Instance.SetPlayerHpBar(playerHealth.CurrentHealth, playerHealth.MaxHealth);
     }
 
     private void SetGateHealth()
     {
-        int health = gateHealth.CurrentHealth;
-        int maxHealth = gateHealth.MaxHealth;
-
-        HUD.Instance.SetGateHpBar(health, maxHealth);
+        HUD.Instance.SetGateHpBar(gateHealth.CurrentHealth, gateHealth.MaxHealth);
     }
 
     private void SetHeroArrival()
     {
-        float arrivalTime = heroArrivalTimer.arrivalTime;
-        HUD.Instance.SetHeroArrivalBar(arrivalTime, arrivalTime);
+        HUD.Instance.SetHeroArrivalBar(heroArrivalTimer.arrivalTime, heroArrivalTimer.arrivalTime);
     }
 
     private void SetDemonPressure()
     {
-        float arrivalTime = demonPressureTimer.arrivalTime;
-        HUD.Instance.SetDemonPressureBar(arrivalTime, arrivalTime);
+        HUD.Instance.SetDemonPressureBar(demonPressureTimer.arrivalTime, demonPressureTimer.arrivalTime);
     }
 }

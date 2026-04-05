@@ -22,6 +22,12 @@ public class HeroArrivalTimer : MonoBehaviour
         }
     }
 
+    public void DelayArrival(float seconds)
+    {
+        timer += seconds;
+        arrivalTime += seconds; // supaya bar proportion tidak berubah aneh
+    }
+
     private void OnHeroArrived()
     {
         GameManager.Instance.OnHeroArrived();
