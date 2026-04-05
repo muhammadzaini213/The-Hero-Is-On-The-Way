@@ -4,8 +4,7 @@ public class HeroArrivalTimer : MonoBehaviour
 {
     [Header("Timer Settings (Minute)")]
     public float arrivalTime = 10f;
-    private float timer;
-
+    public float timer { get; private set; }
     void Start()
     {
         timer = arrivalTime;
@@ -31,5 +30,10 @@ public class HeroArrivalTimer : MonoBehaviour
     private void OnHeroArrived()
     {
         GameManager.Instance.OnHeroArrived();
+    }
+
+    public void StopTimer()
+    {
+        enabled = false;
     }
 }

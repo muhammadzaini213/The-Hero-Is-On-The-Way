@@ -57,6 +57,9 @@ MonoBehaviour:
     type: 3}
   healEffectSpawn: {fileID: 0}
   healSfx: {fileID: 8300000, guid: f81cd99d240ef32edb8bf7adf5baf834, type: 3}
+  heroArrivalSfx: {fileID: 8300000, guid: 81b89247f28490963ada69e4d722d707, type: 3}
+  heroArrivalVFX: {fileID: 0}
+  demonKingObject: {fileID: 0}
 --- !u!1 &5172731530395375073
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31b4caccc858c97e2a7275b3ca2f5969, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrivalTime: 60
+  arrivalTime: 10
 --- !u!1 &9207372990873637231
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,4 +196,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efd869c1cb07079d6b2d3235d2f61621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrivalTime: 60
+  arrivalTime: 5

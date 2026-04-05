@@ -470,6 +470,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DemonSoldier
       objectReference: {fileID: 0}
+    - target: {fileID: 1876618949155665465, guid: 802bafd80dc5d6cf196bd331e0cbf978,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1197,11 +1202,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: DemonKing
       objectReference: {fileID: 0}
+    - target: {fileID: 1876618949155665465, guid: 4f0d3b17a79f96c019de273e8d9d6d29,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f0d3b17a79f96c019de273e8d9d6d29, type: 3}
+--- !u!1 &1828027437 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1876618949155665465, guid: 4f0d3b17a79f96c019de273e8d9d6d29,
+    type: 3}
+  m_PrefabInstance: {fileID: 1828027436}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1557553602139229630
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1348,9 +1364,19 @@ PrefabInstance:
       objectReference: {fileID: 1372884467}
     - target: {fileID: 247747500060849841, guid: 06e28eed797ea758d9968ed37d91c720,
         type: 3}
+      propertyPath: demonKingObject
+      value: 
+      objectReference: {fileID: 1828027437}
+    - target: {fileID: 247747500060849841, guid: 06e28eed797ea758d9968ed37d91c720,
+        type: 3}
       propertyPath: healEffectSpawn
       value: 
       objectReference: {fileID: 4614286090098080004}
+    - target: {fileID: 1000291903474839317, guid: 06e28eed797ea758d9968ed37d91c720,
+        type: 3}
+      propertyPath: arrivalTime
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1648690216342698455, guid: 06e28eed797ea758d9968ed37d91c720,
         type: 3}
       propertyPath: m_Name

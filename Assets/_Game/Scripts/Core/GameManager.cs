@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioClip healSfx;
     [SerializeField] private AudioClip heroArrivalSfx;
     [SerializeField] private GameObject heroArrivalVFX;
+    [SerializeField] private GameObject demonKingObject;
     void Awake() => Instance = this;
 
     void Start()
@@ -83,7 +84,27 @@ public class GameManager : MonoBehaviour
             fadeIn: true, fadeOut: false);
     }
 
-    public void OnDemonPressureFull() { }
+    public void OnDemonPressureFull()
+    {
+        demonKingObject.SetActive(true);
+
+        if (heroArrivalTimer.timer < 60f)
+        {
+            heroArrivalTimer.StopTimer(); // stop timer supaya bar tidak aneh
+            Invoke("SetDemonKingCutscene", 10f);
+        } else
+        {
+            SceneChanger.Instance.ChangeScene("GameOver",
+                new string[] { "The hero is too late!", "Demon King has arrived and destroyed everything." },
+                fadeIn: true, fadeOut: false);
+        }
+    }
+
+    private void SetDemonKingCutscene()
+    {
+        SceneChanger.Instance.ChangeScene("DemonKingCutscene", "Weak knight, you think you can stop me?",
+            fadeIn: true, fadeOut: false);
+    }
 
     // ================== DEFAULT SETTER ==================
 
