@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 74efbc0f819ff2589a32322105a0bce0
+guid: d93b3d99e7808df05b66d05f4eda3a31
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player Run+Attack_0
+      name: dead_1-Sheet-export_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 128
-        height: 128
+        width: 100
+        height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,20 +111,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c43d653012411f5a851c06919975cce
-      internalID: 430974907
+      spriteID: de78d777192984b14b2959bd4ae34f60
+      internalID: -811720008
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Run+Attack_1
+      name: dead_1-Sheet-export_1
       rect:
         serializedVersion: 2
-        x: 128
+        x: 100
         y: 0
-        width: 128
-        height: 128
+        width: 100
+        height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,20 +132,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5bbd250bd6e06856295e2d3984f0c145
-      internalID: -425658642
+      spriteID: 8739d2d96564ea2c5886dd5b4016b721
+      internalID: -86556589
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Run+Attack_2
+      name: dead_1-Sheet-export_2
       rect:
         serializedVersion: 2
-        x: 256
+        x: 200
         y: 0
-        width: 128
-        height: 128
+        width: 100
+        height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,20 +153,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d09f5b270546517259de9e32fe0cb379
-      internalID: 1617547167
+      spriteID: 0668c33e7a0f013508723dd0f741964c
+      internalID: 1987868448
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Run+Attack_3
+      name: dead_1-Sheet-export_3
       rect:
         serializedVersion: 2
-        x: 384
+        x: 300
         y: 0
-        width: 128
-        height: 128
+        width: 100
+        height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -174,50 +174,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 49e3b9a4374e026c7ac39caa96dacb3e
-      internalID: -325829163
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player Run+Attack_4
-      rect:
-        serializedVersion: 2
-        x: 512
-        y: 0
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 410404073113281b0890b4255813a945
-      internalID: -244907222
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player Run+Attack_5
-      rect:
-        serializedVersion: 2
-        x: 640
-        y: 0
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2eb98a62d8c32068484290c891a3a990
-      internalID: 1552441306
+      spriteID: 4158163c710c027149a0b538cac3d1f0
+      internalID: -1435527253
       vertices: []
       indices: 
       edges: []
@@ -225,7 +183,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: b1f7807c31ef6ed50b8019147557911b
+    spriteID: 54837a7d36abc5194a0649c3f234775e
     internalID: 0
     vertices: []
     indices: 
@@ -233,12 +191,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Player Run+Attack_0: 430974907
-      Player Run+Attack_1: -425658642
-      Player Run+Attack_2: 1617547167
-      Player Run+Attack_3: -325829163
-      Player Run+Attack_4: -244907222
-      Player Run+Attack_5: 1552441306
+      dead_1-Sheet-export_0: -811720008
+      dead_1-Sheet-export_1: -86556589
+      dead_1-Sheet-export_2: 1987868448
+      dead_1-Sheet-export_3: -1435527253
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

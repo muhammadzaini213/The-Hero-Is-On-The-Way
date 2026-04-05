@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e360136c6b430e9cabd7e4d79a0f2459
+guid: 65bb8e71d2adcb8d18538164bac7ad84
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,106 +97,64 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player Defend_0
+      name: hit_1-Sheet-export_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 128
-        height: 128
-      alignment: 9
-      pivot: {x: 0.3326291, y: 0.2946936}
+        width: 100
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6f4161afcce955c70af85428971b31d9
-      internalID: -994754853
+      spriteID: 39c13804a829cfb169ab9f26324602c4
+      internalID: 1328635552
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Defend_1
+      name: hit_1-Sheet-export_1
       rect:
         serializedVersion: 2
-        x: 128
+        x: 100
         y: 0
-        width: 128
-        height: 128
-      alignment: 9
-      pivot: {x: 0.31473744, y: 0.2946936}
+        width: 100
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 987b8e7d640fb970a954f09abf1b799a
-      internalID: -701393838
+      spriteID: 0be8f141b76288be69c1a044849644b0
+      internalID: -1304413043
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player Defend_2
+      name: hit_1-Sheet-export_2
       rect:
         serializedVersion: 2
-        x: 256
+        x: 200
         y: 0
-        width: 128
-        height: 128
-      alignment: 9
-      pivot: {x: 0.33304906, y: 0.2946936}
+        width: 100
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fbf015b3351d093eea9726030fe0e642
-      internalID: 290153734
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player Defend_3
-      rect:
-        serializedVersion: 2
-        x: 384
-        y: 0
-        width: 128
-        height: 128
-      alignment: 9
-      pivot: {x: 0.32199526, y: 0.2946936}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 531d1f791d09e82f7ae2401d9b3a9458
-      internalID: 518141730
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player Defend_4
-      rect:
-        serializedVersion: 2
-        x: 512
-        y: 0
-        width: 128
-        height: 128
-      alignment: 9
-      pivot: {x: 0.34750414, y: 0.2946936}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c52b82c9011b6aa15b7d52ae325f9b22
-      internalID: -680620474
+      spriteID: e9c06c3e36557d943ae1d2d57a23b057
+      internalID: -1056437315
       vertices: []
       indices: 
       edges: []
@@ -204,7 +162,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: b0d29ca08201446a6904cec96b7d4f9b
+    spriteID: cb38328bbaaf1f4d4b7f5c65fcd5914e
     internalID: 0
     vertices: []
     indices: 
@@ -212,11 +170,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Player Defend_0: -994754853
-      Player Defend_1: -701393838
-      Player Defend_2: 290153734
-      Player Defend_3: 518141730
-      Player Defend_4: -680620474
+      hit_1-Sheet-export_0: 1328635552
+      hit_1-Sheet-export_1: -1304413043
+      hit_1-Sheet-export_2: -1056437315
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

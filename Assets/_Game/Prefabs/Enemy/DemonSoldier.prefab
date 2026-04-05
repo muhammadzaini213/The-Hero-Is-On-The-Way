@@ -21,7 +21,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &349152761862889648
 Transform:
   m_ObjectHideFlags: 0
@@ -67,13 +67,13 @@ MonoBehaviour:
   attackRange: 1.5
   chaseRange: 6
   attackPoint: {fileID: 6235581441624430855}
-  attackRadius: 1.38
+  attackRadius: 0.98
   attackDamage: 10
   playerLayers:
     serializedVersion: 2
     m_Bits: 2097152
   walkSfx: {fileID: 8300000, guid: b16f232d9e11ffd618e6d4c14d3111bf, type: 3}
-  attackSfx: {fileID: 8300000, guid: 4bd9847f95e4b75a396c208b41514e7f, type: 3}
+  attackSfx: {fileID: 8300000, guid: 2c62a273d862b974ba4e5ace8561fc4a, type: 3}
   hurtSfx: {fileID: 8300000, guid: dffaac5d1a9ce5ef8ac391ae4bd605bf, type: 3}
   deathSfx: {fileID: 8300000, guid: eb4e1c057f56464e29305fd2ffa698d2, type: 3}
   target: {fileID: 0}
@@ -121,7 +121,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 1951891551, guid: 98e9b99862df275b69cf860835baaa91, type: 3}
+  m_Sprite: {fileID: -726920300, guid: 6b8ef60f6262f68969e1e2bc5185f032, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -185,8 +185,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.23584047, y: -0.8372817}
-  m_Size: {x: 0.6169849, y: 2.5271263}
+  m_Offset: {x: -0.07653424, y: -0.66624445}
+  m_Size: {x: 0.42572504, y: 1.6818956}
   m_Direction: 0
 --- !u!50 &6573571579100128202
 Rigidbody2D:
@@ -240,7 +240,7 @@ Transform:
   m_GameObject: {fileID: 5481093026167657789}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.21, y: -1, z: 0}
+  m_LocalPosition: {x: 0.92, y: -0.82, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

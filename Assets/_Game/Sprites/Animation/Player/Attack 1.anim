@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: DemonSoldierHurt
+  m_Name: Attack 1
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,11 +21,15 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 1328635552, guid: 65bb8e71d2adcb8d18538164bac7ad84, type: 3}
-    - time: 0.26666668
-      value: {fileID: -1304413043, guid: 65bb8e71d2adcb8d18538164bac7ad84, type: 3}
+      value: {fileID: -522266892, guid: 3bcb3bf5b76a99516a0150ac48d4674a, type: 3}
+    - time: 0.18333334
+      value: {fileID: 1176336700, guid: 3bcb3bf5b76a99516a0150ac48d4674a, type: 3}
+    - time: 0.36666667
+      value: {fileID: -1440692246, guid: 3bcb3bf5b76a99516a0150ac48d4674a, type: 3}
     - time: 0.53333336
-      value: {fileID: -1056437315, guid: 65bb8e71d2adcb8d18538164bac7ad84, type: 3}
+      value: {fileID: -1735856079, guid: 3bcb3bf5b76a99516a0150ac48d4674a, type: 3}
+    - time: 0.71666664
+      value: {fileID: 1578334349, guid: 3bcb3bf5b76a99516a0150ac48d4674a, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -48,15 +52,17 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 1328635552, guid: 65bb8e71d2adcb8d18538164bac7ad84, type: 3}
-    - {fileID: -1304413043, guid: 65bb8e71d2adcb8d18538164bac7ad84, type: 3}
-    - {fileID: -1056437315, guid: 65bb8e71d2adcb8d18538164bac7ad84, type: 3}
+    - {fileID: -522266892, guid: 3bcb3bf5b76a99516a0150ac48d4674a, type: 3}
+    - {fileID: 1176336700, guid: 3bcb3bf5b76a99516a0150ac48d4674a, type: 3}
+    - {fileID: -1440692246, guid: 3bcb3bf5b76a99516a0150ac48d4674a, type: 3}
+    - {fileID: -1735856079, guid: 3bcb3bf5b76a99516a0150ac48d4674a, type: 3}
+    - {fileID: 1578334349, guid: 3bcb3bf5b76a99516a0150ac48d4674a, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.5833333
+    m_StopTime: 0.7333333
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -75,11 +81,4 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events:
-  - time: 0.5833333
-    functionName: OnHurtEnds
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
+  m_Events: []
