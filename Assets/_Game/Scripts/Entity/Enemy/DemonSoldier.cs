@@ -1,7 +1,9 @@
 using UnityEngine;
 
-// Animator: taruh 5 clip (Idle, Run, Attack, Hit, Death) tanpa panah apapun.
-// Semua transisi dikontrol penuh dari kode.
+// Animation Events yang dibutuhkan di clip:
+// Attack clip : OnAttackHit (tengah ayunan), OnAttackEnds (frame terakhir)
+// Hurt clip   : OnHurtEnds (frame terakhir)
+// Death clip  : OnDeathEnds (frame terakhir)
 
 public class DemonSoldier : Enemy
 {
@@ -9,34 +11,100 @@ public class DemonSoldier : Enemy
     public float moveSpeed = 3f;
     public float attackRange = 1.5f;
     public float chaseRange = 6f;
-    public int maxHp = 3;
 
-    [HideInInspector] public int hp;
+    [Header("Attack")]
+    [SerializeField] private Transform attackPoint;
+    [SerializeField] private float attackRadius = 0.6f;
+    [SerializeField] private int attackDamage = 10;
+    [SerializeField] private LayerMask playerLayers;
+
+    [Header("SFX")]
+    [SerializeField] private AudioClip walkSfx;
+    [SerializeField] private AudioClip attackSfx;
+    [SerializeField] private AudioClip hurtSfx;
+    [SerializeField] private AudioClip deathSfx;
+
     [HideInInspector] public Transform target;
-    [HideInInspector] public bool isDead;
+    [HideInInspector] public bool attackEnded;
+    [HideInInspector] public bool hurtEnded;
+    [HideInInspector] public bool deathEnded;
+
+    private EnemyHealth _health;
 
     protected override void Awake()
     {
         base.Awake();
-        hp = maxHp;
-        target = GameObject.FindGameObjectWithTag("Player")?.transform;
+        _health = GetComponent<EnemyHealth>();
+
+        if (_health == null) { Debug.LogWarning($"[DemonSoldier] Tidak ada EnemyHealth di {name}"); return; }
+        _health.OnHealthChanged += OnHealthChanged;
+        _health.OnDeath += OnDeath;
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        if (target == null)
+            target = GameObject.FindGameObjectWithTag("Player")?.transform;
+    }
+
+    private void OnDestroy()
+    {
+        if (_health == null) return;
+        _health.OnHealthChanged -= OnHealthChanged;
+        _health.OnDeath -= OnDeath;
     }
 
     protected override EnemyState InitialState() => new EnemyIdleState(this);
 
-    public void TakeDamage(int amount)
+    public void FaceTarget()
     {
-        if (isDead) return;
-        hp -= amount;
-        if (hp <= 0)
-            ChangeState(new EnemyDeathState(this));
-        else
-            ChangeState(new EnemyHitState(this));
+        if (target == null) return;
+        Vector3 scale = transform.localScale;
+        scale.x = target.position.x < transform.position.x ? -1f : 1f;
+        transform.localScale = scale;
+    }
+
+    // ---- SFX ----
+    public void PlayWalkSfx() => SfxPlayer.Instance.PlayEnemySfx(walkSfx, loop: true);
+    public void PlayAttackSfx() => SfxPlayer.Instance.PlayEnemySfx(attackSfx);
+    public void PlayHurtSfx() => SfxPlayer.Instance.PlayEnemySfx(hurtSfx);
+    public void PlayDeathSfx() => SfxPlayer.Instance.PlayEnemySfx(deathSfx);
+
+    // ---- Animation Events ----
+    public void OnAttackHit()
+    {
+        if (attackPoint == null) return;
+        Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint.position, attackRadius);
+        foreach (Collider2D hit in hits)
+            if (hit.TryGetComponent(out Health h))
+                h.TakeDamage(attackDamage);
+    }
+
+    public void OnAttackEnds() => attackEnded = true;
+    public void OnHurtEnds() => hurtEnded = true;
+    public void OnDeathEnds() => deathEnded = true;
+
+    // ---- Health Events ----
+    private void OnHealthChanged(int current, int max)
+    {
+        if (_health.IsDead) return;
+        if (CurrentState is EnemyHurtState || CurrentState is EnemyDeathState) return;
+        ChangeState(new EnemyHurtState(this));
+    }
+
+    private void OnDeath() => ChangeState(new EnemyDeathState(this));
+
+    private void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null) return;
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
     }
 }
 
 // -----------------------------------------------------------------------
-// Idle — diam, scan player
+// Idle
 // -----------------------------------------------------------------------
 public class EnemyIdleState : EnemyState
 {
@@ -49,6 +117,7 @@ public class EnemyIdleState : EnemyState
     public override void Update()
     {
         if (_d.target == null) return;
+        _d.FaceTarget();
         float dist = Vector2.Distance(_d.transform.position, _d.target.position);
         if (dist <= _d.chaseRange)
             _d.ChangeState(new EnemyRunState(_d));
@@ -56,19 +125,25 @@ public class EnemyIdleState : EnemyState
 }
 
 // -----------------------------------------------------------------------
-// Run — kejar player
+// Run
 // -----------------------------------------------------------------------
 public class EnemyRunState : EnemyState
 {
     private DemonSoldier _d;
     public EnemyRunState(DemonSoldier e) : base(e) { _d = e; }
 
-    public override void Enter() => Play("Run");
+    public override void Enter()
+    {
+        Play("Run");
+        _d.PlayWalkSfx();
+    }
+
     public override void Exit() { }
 
     public override void Update()
     {
         if (_d.target == null) return;
+        _d.FaceTarget();
         float dist = Vector2.Distance(_d.transform.position, _d.target.position);
 
         if (dist <= _d.attackRange) { _d.ChangeState(new EnemyAttackState(_d)); return; }
@@ -84,58 +159,55 @@ public class EnemyRunState : EnemyState
 }
 
 // -----------------------------------------------------------------------
-// Attack — serang, tunggu animasi selesai, lalu cek lagi
+// Attack
 // -----------------------------------------------------------------------
 public class EnemyAttackState : EnemyState
 {
     private DemonSoldier _d;
-    private bool _attacked;
-
     public EnemyAttackState(DemonSoldier e) : base(e) { _d = e; }
 
     public override void Enter()
     {
-        _attacked = false;
+        _d.attackEnded = false;
+        _d.FaceTarget();
         Play("Attack");
+        _d.PlayAttackSfx();
     }
 
     public override void Update()
     {
-        // Tunggu animasi attack selesai baru transisi
-        if (!IsAnimationDone()) return;
-
-        if (!_attacked)
-        {
-            // lakukan damage di sini atau via AnimationEvent
-            _attacked = true;
-        }
+        if (!_d.attackEnded) return;
 
         float dist = Vector2.Distance(_d.transform.position, _d.target.position);
-        if (dist <= _d.attackRange)
-            _d.ChangeState(new EnemyAttackState(_d)); // loop attack
-        else
-            _d.ChangeState(new EnemyRunState(_d));
+        _d.ChangeState(dist <= _d.attackRange
+            ? (EnemyState)new EnemyAttackState(_d)
+            : new EnemyRunState(_d));
     }
 
     public override void Exit() { }
 }
 
 // -----------------------------------------------------------------------
-// Hit — kena damage, tunggu animasi, lanjut
+// Hurt
 // -----------------------------------------------------------------------
-public class EnemyHitState : EnemyState
+public class EnemyHurtState : EnemyState
 {
     private DemonSoldier _d;
-    public EnemyHitState(DemonSoldier e) : base(e) { _d = e; }
+    public EnemyHurtState(DemonSoldier e) : base(e) { _d = e; }
 
-    public override void Enter() => Play("Hit");
+    public override void Enter()
+    {
+        _d.hurtEnded = false;
+        Play("Hurt");
+        _d.PlayHurtSfx();
+    }
+
     public override void Exit() { }
 
     public override void Update()
     {
-        if (!IsAnimationDone()) return;
+        if (!_d.hurtEnded) return;
 
-        // Setelah kena hit, lanjut chase atau idle
         if (_d.target != null)
         {
             float dist = Vector2.Distance(_d.transform.position, _d.target.position);
@@ -151,7 +223,7 @@ public class EnemyHitState : EnemyState
 }
 
 // -----------------------------------------------------------------------
-// Death — mati, tunggu animasi, destroy
+// Death
 // -----------------------------------------------------------------------
 public class EnemyDeathState : EnemyState
 {
@@ -160,15 +232,16 @@ public class EnemyDeathState : EnemyState
 
     public override void Enter()
     {
-        _d.isDead = true;
+        _d.deathEnded = false;
         Play("Death");
-    }
-
-    public override void Update()
-    {
-        if (!IsAnimationDone()) return;
-        Object.Destroy(_d.gameObject);
+        _d.PlayDeathSfx();
     }
 
     public override void Exit() { }
+
+    public override void Update()
+    {
+        if (!_d.deathEnded) return;
+        Object.Destroy(_d.gameObject);
+    }
 }

@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31b4caccc858c97e2a7275b3ca2f5969, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrivalTime: 10
+  arrivalTime: 60
 --- !u!1 &9207372990873637231
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,4 +187,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efd869c1cb07079d6b2d3235d2f61621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrivalTime: 10
+  arrivalTime: 60

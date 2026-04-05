@@ -4,9 +4,10 @@ public class GateHealth : Health
 {
     protected override void Start()
     {
-        base.Start();
         OnDeath += HandleGateDestroyed;
         OnHealthChanged += HandleHealthChanged;
+        base.Start();
+        HUD.Instance.SetGateHpBar(CurrentHealth, MaxHealth);
     }
 
     private void HandleGateDestroyed()

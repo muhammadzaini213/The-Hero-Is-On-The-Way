@@ -10,11 +10,17 @@ public class InjuredKnightHealth : Health
     public bool isDeath { get; private set; }
     protected override void Start()
     {
-        base.Start();
-        attack = GetComponent<InjuredKnightAttack>();
-        isHitAnimation = false;
+        // Subscribe dulu sebelum base.Start()
         OnDeath += HandlePlayerDeath;
         OnHealthChanged += HandleHealthChanged;
+
+        base.Start(); // baru ini — NotifyHealthChanged() dipanggil di sini
+
+        attack = GetComponent<InjuredKnightAttack>();
+        isHitAnimation = false;
+        isDeath = false;
+        HUD.Instance.SetPlayerHpBar(CurrentHealth, MaxHealth);
+
     }
 
     public override void TakeDamage(int damage)
