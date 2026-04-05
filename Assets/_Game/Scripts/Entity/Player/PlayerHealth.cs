@@ -6,16 +6,16 @@ public class PlayerHealth : Health
     {
         base.Start();
         OnDeath += HandlePlayerDeath;
+        OnHealthChanged += HandleHealthChanged;
     }
 
     private void HandlePlayerDeath()
     {
-        Debug.Log("Player died! Show Game Over.");
+        GameManager.Instance.OnPlayerDeath();
     }
 
-    public override void TakeDamage(int amount)
+    private void HandleHealthChanged(int current, int max)
     {
-        int reduced = Mathf.Max(amount - 5, 0); // contoh: armor 5
-        base.TakeDamage(reduced);
+        HUD.Instance.SetPlayerHpBar(current, max);
     }
 }
