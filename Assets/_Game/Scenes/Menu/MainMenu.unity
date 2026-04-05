@@ -790,6 +790,7 @@ MonoBehaviour:
   gameSceneName: GameScene
   aboutMenuSceneName: AboutMenu
   settingsMenuSceneName: SettingsMenu
+  buttonClickSound: {fileID: 8300000, guid: 283e0972fdf9e3dfba9aec239efc24f3, type: 3}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
