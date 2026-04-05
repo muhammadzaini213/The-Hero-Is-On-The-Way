@@ -11,7 +11,7 @@ public class HUD : MonoBehaviour
     [SerializeField] private Slider gateHpBar;
     [SerializeField] private Slider heroArrivalBar;
     [SerializeField] private Slider demonPressureBar;
-
+    [SerializeField] private AudioClip buttonClickSound;
     void Awake()
     {
         Instance = this;
@@ -76,6 +76,7 @@ public class HUD : MonoBehaviour
     // ======================== PAUSE ========================
     public void OnPauseClicked()
     {
+        SfxPlayer.Instance.PlayUISfx(buttonClickSound);
         Debug.Log("Pause button clicked!");
     }
 }
