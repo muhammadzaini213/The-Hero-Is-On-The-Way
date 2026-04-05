@@ -22,6 +22,11 @@ public class DemonPressureTimer : MonoBehaviour
         }
     }
 
+    public void StopTimer()
+    {
+        enabled = false;
+    }
+    
     private void OnDemonPressureFull()
     {
         GameManager.Instance.OnDemonPressureFull();

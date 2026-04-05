@@ -6,6 +6,8 @@ public abstract class Health : MonoBehaviour
     [SerializeField] private int maxHealth = 100;
     private int currentHealth;
     private bool isDead = false;
+    public bool isInvincible = false;
+
 
     // ================= EVENTS =================
     public event Action<int, int> OnHealthChanged;
@@ -28,6 +30,11 @@ public abstract class Health : MonoBehaviour
 
         if (currentHealth == 0)
             HandleDeath();
+    }
+    public void Invincible()
+    {
+        isInvincible = true;
+        gameObject.layer = LayerMask.NameToLayer("UI");
     }
 
     public virtual void Heal(int amount)

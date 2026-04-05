@@ -12,7 +12,7 @@ public class MainMenu : MonoBehaviour
     public void StartGame()
     {
         SfxPlayer.Instance.PlayUISfx(buttonClickSound);
-        SceneManager.LoadScene(gameSceneName);
+        SceneChanger.Instance.ChangeScene(gameSceneName, new[] {"The hero is on the way." ,"Please, hold the line until they arrive."}, fadeIn: true, fadeOut: false);
     }
 
     public void ContinueGame()

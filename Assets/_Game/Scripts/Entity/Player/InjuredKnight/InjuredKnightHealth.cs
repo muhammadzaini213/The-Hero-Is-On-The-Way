@@ -25,6 +25,7 @@ public class InjuredKnightHealth : Health
 
     public override void TakeDamage(int damage)
     {
+        if (isInvincible) return;
         if (isDeath) return;
 
         if (isHitAnimation) return;

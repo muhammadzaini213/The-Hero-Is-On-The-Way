@@ -375,7 +375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 499cba6d6f3bedb26bb4d43d7184a121, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameSceneName: GameScene
+  gameSceneName: MainGame
   mainMenuSceneName: MainMenu
   buttonClickSound: {fileID: 8300000, guid: 283e0972fdf9e3dfba9aec239efc24f3, type: 3}
 --- !u!1 &410087039

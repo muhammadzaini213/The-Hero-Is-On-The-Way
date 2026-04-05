@@ -7,8 +7,11 @@ public class PlayerMove : MonoBehaviour
 
     private float horizontalInput;
     private bool jumpRequest;
-
     private bool isGrounded;
+
+    // Enum tutorial dengan tambahan step Heal
+    private enum TutorialStep { Movement, Jump, Attack, Counter, Heal, Completed }
+    private TutorialStep currentStep = TutorialStep.Movement;
 
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 18f;
@@ -20,7 +23,12 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
 
     [Header("Combat")]
+    [SerializeField] private int attackDamage = 10;
     [SerializeField] private float attackCooldown = 0.5f;
+    [SerializeField] private Transform attackPoint;    
+    [SerializeField] private float attackRange = 0.6f;  
+    [SerializeField] private LayerMask enemyLayers;    
+
     private float lastAttackTime;
     private bool isAttacking;
 
@@ -39,107 +47,157 @@ public class PlayerMove : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    void Start()
+    {
+        UpdateTutorialUI();
+    }
+
+    public bool IsCountering() => isCountering;
+
     void Update()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
+        // Input Logic
+        if (isAttacking) horizontalInput = 0;
+        else horizontalInput = Input.GetAxisRaw("Horizontal");
 
-        // Jump
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-        {
-            jumpRequest = true;
-        }
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded) jumpRequest = true;
 
-        // Attack
-        if (Input.GetKeyDown(KeyCode.J) && Time.time >= lastAttackTime + attackCooldown)
-        {
+        if (Input.GetKeyDown(KeyCode.J) && Time.time >= lastAttackTime + attackCooldown && isGrounded)
             Attack();
-        }
 
-        // Counter (FIXED: no longer tied to attack)
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            StartCounter();
-        }
+        if (Input.GetKeyDown(KeyCode.K)) StartCounter();
 
-        // Animator
+        // Animator Updates
         bool moving = Mathf.Abs(horizontalInput) > 0.01f;
         _animator.SetBool("isRunning", moving);
         _animator.SetBool("isJumping", !isGrounded);
 
         FlipSprite();
+
+        // Tutorial Logic Check
+        if (currentStep != TutorialStep.Completed)
+        {
+            CheckTutorialProgress();
+        }
     }
 
     void FixedUpdate()
     {
         CheckGround();
         Move();
+        if (jumpRequest) Jump();
+    }
 
-        if (jumpRequest)
+    // ================= TUTORIAL LOGIC =================
+
+    private void UpdateTutorialUI()
+    {
+        if (TutorialText.Instance == null) return;
+
+        switch (currentStep)
         {
-            Jump();
+            case TutorialStep.Movement:
+                TutorialText.Instance.ShowTutorial("Use A/D to MOVE");
+                break;
+            case TutorialStep.Jump:
+                TutorialText.Instance.ShowTutorial("Great! Press SPACE to JUMP");
+                break;
+            case TutorialStep.Attack:
+                TutorialText.Instance.ShowTutorial("Nice! Press J to ATTACK");
+                break;
+            case TutorialStep.Counter:
+                TutorialText.Instance.ShowTutorial("Defend yourself! Press K to COUNTER");
+                break;
+            case TutorialStep.Heal:
+                TutorialText.Instance.ShowTutorial("Injured? Press F to get Hero support (The hero would arrive more late...)");
+                break;
+            case TutorialStep.Completed:
+                TutorialText.Instance.ShowTutorial("Tutorial Complete!");
+                Invoke(nameof(HideTutorialNow), 5f);
+                break;
         }
     }
 
-    // ================= MOVEMENT =================
-
-    private void Move()
+    private void CheckTutorialProgress()
     {
-        rb.velocity = new Vector2(horizontalInput * moveSpeed, rb.velocity.y);
+        if (currentStep == TutorialStep.Movement && Mathf.Abs(horizontalInput) > 0.1f)
+        {
+            currentStep = TutorialStep.Jump;
+            UpdateTutorialUI();
+        }
+        else if (currentStep == TutorialStep.Jump && jumpRequest)
+        {
+            currentStep = TutorialStep.Attack;
+            UpdateTutorialUI();
+        }
+        else if (currentStep == TutorialStep.Attack && isAttacking)
+        {
+            currentStep = TutorialStep.Counter;
+            UpdateTutorialUI();
+        }
+        else if (currentStep == TutorialStep.Counter && isCountering)
+        {
+            currentStep = TutorialStep.Heal;
+            UpdateTutorialUI();
+        }
+        else if (currentStep == TutorialStep.Heal && Input.GetKeyDown(KeyCode.F))
+        {
+            currentStep = TutorialStep.Completed;
+            UpdateTutorialUI();
+        }
     }
+
+    private void HideTutorialNow()
+    {
+        if (TutorialText.Instance != null)
+            TutorialText.Instance.HideTutorial();
+    }
+
+    // ================= MOVEMENT & COMBAT =================
+
+    private void Move() => rb.velocity = new Vector2(horizontalInput * moveSpeed, rb.velocity.y);
 
     private void Jump()
     {
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-
-        if (jumpSfx != null)
-            SfxPlayer.Instance.PlayPlayerSfx(jumpSfx);
-
+        if (jumpSfx != null) SfxPlayer.Instance.PlayPlayerSfx(jumpSfx);
         jumpRequest = false;
     }
 
-    private void CheckGround()
-    {
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
-    }
+    private void CheckGround() => isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
 
     private void FlipSprite()
     {
-        if (horizontalInput > 0)
-            transform.localScale = new Vector3(1, 1, 1);
-        else if (horizontalInput < 0)
-            transform.localScale = new Vector3(-1, 1, 1);
+        if (horizontalInput > 0) transform.eulerAngles = Vector3.zero;
+        else if (horizontalInput < 0) transform.eulerAngles = new Vector3(0, 180, 0);
     }
-
-    // ================= COMBAT =================
 
     private void Attack()
     {
         isAttacking = true;
         lastAttackTime = Time.time;
-
         _animator.SetTrigger("attack");
-
-        if (attackSfx != null)
-            SfxPlayer.Instance.PlayPlayerSfx(attackSfx);
-
-        Invoke(nameof(EndAttack), 0.2f);
+        if (attackSfx != null) SfxPlayer.Instance.PlayPlayerSfx(attackSfx);
     }
 
-    private void EndAttack()
+    public void OnAttackHit()
     {
-        isAttacking = false;
+        if (attackPoint == null) return;
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            if (enemy.TryGetComponent(out EnemyHealth target)) target.TakeDamage(attackDamage);
+        }
     }
+
+    public void OnAttackEnds() => isAttacking = false;
 
     private void StartCounter()
     {
         if (isCountering) return;
-
         isCountering = true;
         _animator.SetBool("isDefend", true);
-
-        if (counterSfx != null)
-            SfxPlayer.Instance.PlayPlayerSfx(counterSfx);
-
+        if (counterSfx != null) SfxPlayer.Instance.PlayPlayerSfx(counterSfx);
         Invoke(nameof(EndCounter), counterWindow);
     }
 
@@ -149,26 +207,15 @@ public class PlayerMove : MonoBehaviour
         _animator.SetBool("isDefend", false);
     }
 
-    public bool IsCountering() => isCountering;
-
-    // ================= DAMAGE =================
-
     public void PlayHurtSfx()
     {
-        if (hurtSfx != null)
-            SfxPlayer.Instance.PlayPlayerSfx(hurtSfx);
-
+        if (hurtSfx != null) SfxPlayer.Instance.PlayPlayerSfx(hurtSfx);
         _animator.SetTrigger("hurt");
     }
 
-    // ================= DEBUG =================
-
     void OnDrawGizmosSelected()
     {
-        if (groundCheck != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(groundCheck.position, checkRadius);
-        }
+        if (groundCheck != null) { Gizmos.color = Color.red; Gizmos.DrawWireSphere(groundCheck.position, checkRadius); }
+        if (attackPoint != null) { Gizmos.color = Color.yellow; Gizmos.DrawWireSphere(attackPoint.position, attackRange); }
     }
 }

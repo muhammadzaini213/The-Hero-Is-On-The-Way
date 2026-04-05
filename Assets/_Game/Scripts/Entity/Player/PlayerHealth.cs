@@ -5,6 +5,7 @@ public class PlayerHealth : Health
     [SerializeField] Animator _animator;
     [SerializeField] AudioClip hitSfx;
     [SerializeField] AudioClip deathSfx;
+    bool isInvincible = false;
     protected override void Start()
     {
         base.Start();
@@ -15,6 +16,8 @@ public class PlayerHealth : Health
 
     public override void TakeDamage(int damage)
     {
+        if (isInvincible) return;
+        GetComponent<PlayerMove>().OnAttackEnds();
         if (_animator.GetCurrentAnimatorStateInfo(0).IsName("hurt")) return; // prevent taking damage while already in hurt animation
         if (CurrentHealth <= 0)
         {
@@ -29,6 +32,7 @@ public class PlayerHealth : Health
         _animator.SetTrigger("hurt");
 
     }
+
 
 
     private void HandlePlayerDeath()

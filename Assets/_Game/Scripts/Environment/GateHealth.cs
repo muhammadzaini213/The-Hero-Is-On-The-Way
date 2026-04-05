@@ -19,4 +19,6 @@ public class GateHealth : Health
     {
         HUD.Instance.SetGateHpBar(current, max);
     }
+
+    
 }

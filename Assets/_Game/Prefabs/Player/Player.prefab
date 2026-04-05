@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3916501340122832165}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8187272132678857331}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78,9 +78,9 @@ GameObject:
   - component: {fileID: 172919344976134809}
   - component: {fileID: 3770952827574659532}
   - component: {fileID: 9134632957551760902}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,6 +100,7 @@ Transform:
   m_Children:
   - {fileID: 8187272132678857331}
   - {fileID: 3916501340122832165}
+  - {fileID: 8095758195655702010}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4174888551730391456
@@ -115,6 +116,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  _animator: {fileID: 9134632957551760902}
+  hitSfx: {fileID: 8300000, guid: dffaac5d1a9ce5ef8ac391ae4bd605bf, type: 3}
+  deathSfx: {fileID: 8300000, guid: e4ecf4da6690b756abbef846b977fd1c, type: 3}
 --- !u!114 &3551342090420717348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,6 +152,18 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  attackDamage: 10
+  attackCooldown: 0.5
+  attackPoint: {fileID: 8095758195655702010}
+  attackRange: 1.73
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 4194304
+  counterWindow: 0.25
+  attackSfx: {fileID: 8300000, guid: 4bd9847f95e4b75a396c208b41514e7f, type: 3}
+  counterSfx: {fileID: 8300000, guid: 37173d1699ca39f9591b5394453a41e8, type: 3}
+  jumpSfx: {fileID: 8300000, guid: 49c1469d3119f14218997b0f8a4be935, type: 3}
+  hurtSfx: {fileID: 8300000, guid: ad6f0f21b3abcb06cbb6d3835d8dc702, type: 3}
 --- !u!70 &4534524538076802132
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -250,7 +266,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 4
   m_Sprite: {fileID: 10533008, guid: 1bf5c742ab0b4993b9284d26ab7cd909, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -283,3 +299,34 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &8236295647006545103
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8095758195655702010}
+  m_Layer: 21
+  m_Name: AtkPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8095758195655702010
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8236295647006545103}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.18, y: -0.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2587178995501589127}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

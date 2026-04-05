@@ -31,11 +31,11 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.F)) UseHealSupport();
-
-        if (Input.GetKeyDown(KeyCode.B)) playerHealth.TakeDamage(10);
-        if (Input.GetKeyDown(KeyCode.N)) gateHealth.TakeDamage(10);
-        if (Input.GetKeyDown(KeyCode.M)) TutorialText.Instance.ShowTutorial("This is a tutorial text. It will fade in and out smoothly.");
-        if (Input.GetKeyDown(KeyCode.K)) TutorialText.Instance.HideTutorial();
+        SetHealth();
+        // if (Input.GetKeyDown(KeyCode.B)) playerHealth.TakeDamage(10);
+        // if (Input.GetKeyDown(KeyCode.N)) gateHealth.TakeDamage(10);
+        // if (Input.GetKeyDown(KeyCode.M)) TutorialText.Instance.ShowTutorial("This is a tutorial text. It will fade in and out smoothly.");
+        // if (Input.GetKeyDown(KeyCode.K)) TutorialText.Instance.HideTutorial();
     }
 
     // ================== HEAL SUPPORT ==================
@@ -63,6 +63,7 @@ public class GameManager : MonoBehaviour
 
     public void OnPlayerDeath()
     {
+        StopAllTimers();
         SceneChanger.Instance.ChangeScene("GameOver",
             new string[] { "You have been falled.", "The demons killed everyone before they could help." },
             fadeIn: true, fadeOut: false);
@@ -70,6 +71,7 @@ public class GameManager : MonoBehaviour
 
     public void OnGateDestroyed()
     {
+        StopAllTimers();
         SceneChanger.Instance.ChangeScene("GameOver",
             new string[] { "The gate was destroyed!", "No one survived." },
             fadeIn: true, fadeOut: false);
@@ -77,6 +79,8 @@ public class GameManager : MonoBehaviour
 
     public void OnHeroArrived()
     {
+        StopAllTimers();
+        playerHealth.Invincible();
         heroArrivalVFX.SetActive(true);
         SfxPlayer.Instance.PlayEnvironmentSfx(heroArrivalSfx);
         SceneChanger.Instance.ChangeScene("MainMenu",
@@ -88,16 +92,25 @@ public class GameManager : MonoBehaviour
     {
         demonKingObject.SetActive(true);
 
-        if (heroArrivalTimer.timer < 60f)
+        if (heroArrivalTimer.timer < 10f)
         {
-            heroArrivalTimer.StopTimer(); // stop timer supaya bar tidak aneh
+            StopAllTimers();
+            playerHealth.Invincible();
             Invoke("SetDemonKingCutscene", 10f);
-        } else
+        }
+        else
         {
+            StopAllTimers();
             SceneChanger.Instance.ChangeScene("GameOver",
                 new string[] { "The hero is too late!", "Demon King has arrived and destroyed everything." },
                 fadeIn: true, fadeOut: false);
         }
+    }
+
+    private void StopAllTimers()
+    {
+        heroArrivalTimer.StopTimer();
+        demonPressureTimer.StopTimer();
     }
 
     private void SetDemonKingCutscene()

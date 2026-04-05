@@ -73,6 +73,12 @@ public class DemonKing : Enemy
         PlayTeleportSfx();
     }
 
+    public void ChangeScene()
+    {
+        
+        SceneChanger.Instance.ChangeScene("FinalScene", new string[] { "I’m sorry, Theresa… I won’t be home tonight.", "H-how!? That should have obliterated the entire city…" },
+    fadeIn: true, fadeOut: false);
+    }
     // ---- SFX ----
     public void PlayWalkSfx() => SfxPlayer.Instance.PlayEnemySfx(walkSfx);
     public void PlayAttackSfx() => SfxPlayer.Instance.PlayEnemySfx(attackSfx);
