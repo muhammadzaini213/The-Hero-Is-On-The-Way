@@ -11,6 +11,8 @@ public class InjuredKnightAttack : MonoBehaviour
     [SerializeField] private float attackRange = 0.6f; // Jari-jari lingkaran serangan
     [SerializeField] private LayerMask enemyLayers;    // Pilih layer "Enemy" di Inspector
     [SerializeField] private int attackDamage = 10;    // Jumlah damage
+    [SerializeField] private AudioClip attacksfx1; // Suara serangan musuh
+    [SerializeField] private AudioClip attacksfx2; // Suara serangan musuh
 
     void Awake()
     {
@@ -38,10 +40,12 @@ public class InjuredKnightAttack : MonoBehaviour
         if (random == 0)
         {
             _animator.SetTrigger("attack1");
+            SfxPlayer.Instance.PlayPlayerSfx(attacksfx1);
         }
         else
         {
             _animator.SetTrigger("attack2");
+            SfxPlayer.Instance.PlayPlayerSfx(attacksfx2);
         }
     }
 

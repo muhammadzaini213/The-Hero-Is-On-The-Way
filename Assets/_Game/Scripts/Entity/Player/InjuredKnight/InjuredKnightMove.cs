@@ -11,6 +11,7 @@ public class InjuredKnightMove : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 18f;
 
+    [SerializeField] private AudioClip footstepSfx;
     void Awake()
     {
         attack = GetComponent<InjuredKnightAttack>();
@@ -46,6 +47,10 @@ public class InjuredKnightMove : MonoBehaviour
     private void Move()
     {
         rb.velocity = new Vector2(horizontalInput * moveSpeed, rb.velocity.y);
+        if (Mathf.Abs(horizontalInput) > 0.01f)
+        {
+            SfxPlayer.Instance.PlayPlayerSfx(footstepSfx, loop: true);
+        }
     }
 
     private void FlipSprite()

@@ -4,6 +4,8 @@ public class InjuredKnightHealth : Health
 {
     [SerializeField] Animator _animator;
     [SerializeField] InjuredKnightAttack attack;
+    [SerializeField] AudioClip hitSfx;
+    [SerializeField] AudioClip deathSfx;
     public bool isHitAnimation { get; private set; }
     public bool isDeath { get; private set; }
     protected override void Start()
@@ -24,6 +26,7 @@ public class InjuredKnightHealth : Health
         attack.OnAttackEnds();
         _animator.SetTrigger("hit");
         isHitAnimation = true;
+        SfxPlayer.Instance.PlayPlayerSfx(hitSfx);
     }
 
     public void OnHitEnds()
@@ -35,6 +38,7 @@ public class InjuredKnightHealth : Health
     {
         _animator.SetBool("isDeath", true);
         isDeath = true;
+        SfxPlayer.Instance.PlayPlayerSfx(deathSfx);
         GameManager.Instance.OnPlayerDeath();
     }
 
